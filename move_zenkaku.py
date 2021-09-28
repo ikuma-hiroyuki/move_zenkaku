@@ -1,12 +1,16 @@
 import glob
 import re
 import shutil
+import os
+
+REG_PATTERN = "[^\x01-\x7E]|[(]"
 
 # 全角と(が含まれているファイルを移動させる
-pattern = "[^\x01-\x7E]|[(]"
-files = glob.glob("./image/*")
+target_dir = input("Input image Folder path.\n") + "/*"
+zenkaku_dir = input("Input Zenkaku Folder path.\n") + "/"
+files = glob.glob(target_dir)
 for file in files:
-    res = re.search(pattern, file)
+    res = re.search(REG_PATTERN, file)
     if res is not None:
-        print(file)
-        shutil.move(file, "./zenkaku/")
+        print(f"Move {os.path.basename(file)}")
+        shutil.move(file, zenkaku_dir)
